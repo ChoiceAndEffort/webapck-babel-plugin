@@ -2,13 +2,14 @@
  * @Author: lg
  * @Date: 2024-01-12 09:34:22
  * @LastEditors: lg
- * @LastEditTime: 2024-01-12 10:43:53
+ * @LastEditTime: 2024-01-12 17:33:55
  * @Description:
  * @FilePath: \webapck-babel-plugin\webpack.config.js
  */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const MyPlugin = require('./src/my-plugin/plugin1');
 module.exports = {
   mode: 'development',
   entry: './src/index.js',
@@ -28,11 +29,15 @@ module.exports = {
           // 'html-loader',
           './src/my-loader/markdown-loader' // use属性不仅可以使用模块名称，也可以使用模块文件路径
         ]
-      },
+      }
     ]
   },
   plugins: [
     new webpack.ProgressPlugin(),
-    new HtmlWebpackPlugin({ template: './src/index.html' })
+    new HtmlWebpackPlugin({ template: './src/index.html' }),
+    new MyPlugin({
+      sourceDir: 'dist',
+      outputFilename: `dist.${Date.now()}.zip`
+    })
   ]
 };
